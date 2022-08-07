@@ -6,6 +6,8 @@ import { Hero } from '../components/molecules/Hero/Hero'
 import { TopBar } from '../components/organisms/TopBar/TopBar'
 import { LandingBody } from '../components/organisms//LandingBody/LandingBody'
 import { LandingFooter } from '../components/organisms/LandingFooter/LandingFooter'
+import { authOptions } from './api/auth/[...nextauth]'
+import { unstable_getServerSession } from 'next-auth'
 
 const Home: NextPage = () => {
   return (
@@ -27,3 +29,20 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export async function getServerSideProps(context: any) {
+  //is the current user logged or not? authenticated?
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+  if (session) {
+    return {
+      redirect: {
+        destination: '/logged',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {}, // will be passed to the page component as props
+  }
+}

@@ -1,17 +1,22 @@
-import { authOptions } from '../pages/api/auth/[...nextauth]'
+import { authOptions, UserSession } from '../pages/api/auth/[...nextauth]'
 import { unstable_getServerSession } from "next-auth/next"
 import { getSession, signOut } from 'next-auth/react'
 import { Button, Center, Container, Flex, Text } from '@chakra-ui/react'
+import { Todos } from '../components/organisms/Todos/Todos'
+import { TodosContainer } from '../components/organisms/Todos/TodosContainer'
+import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next'
 
-function LoggedPage({ session }) {
+function LoggedPage({ session }: { session: UserSession }) {
   return (
     <Container py="64px">
       <Center>
         <Flex flexDirection="column">
           <Text mb="24px">
-            👋 Welcome back {session.user.name}!
+            👋 Welcome back {session?.user?.name}!
           </Text>
           <Button onClick={() => signOut()}>Log out</Button>
+          {/* list of todos */}
+          <TodosContainer />
         </Flex>
       </Center>
     </Container>
@@ -20,9 +25,9 @@ function LoggedPage({ session }) {
 
 export default LoggedPage
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   //is the current user logged or not? authenticated?
-  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+  const session = await unstable_getServerSession(req, res, authOptions)
   if (!session) {
     return {
       redirect: {

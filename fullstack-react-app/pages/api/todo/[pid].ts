@@ -29,22 +29,28 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (title) updatedData.title = title
     if (isCompleted !== undefined) updatedData.isCompleted = isCompleted
 
-    const id: string = pid.toString()
-    const todo = await prisma.todo.update({
-      where: { id },
-      data: updatedData,
-    })
+    if (pid !== undefined) {
 
-    return res.json(todo)
+      const id: string = pid.toString()
+      const todo = await prisma.todo.update({
+        where: { id },
+        data: updatedData,
+      })
+
+      return res.json(todo)
+    }
+
   }
 
   if (req.method === 'DELETE') {
     const { pid } = req.query
-    const id: string = pid.toString()
-    const todo = await prisma.todo.delete({
-      where: { id },
-    })
-    return res.json(todo)
+    if (pid !== undefined) {
+      const id: string = pid.toString()
+      const todo = await prisma.todo.delete({
+        where: { id },
+      })
+      return res.json(todo)
+    }
   }
 }
 

@@ -39,9 +39,12 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'DELETE') {
-
-
-    return res.json({})
+    const { pid } = req.query
+    const id: string = pid.toString()
+    const todo = await prisma.todo.delete({
+      where: { id },
+    })
+    return res.json(todo)
   }
 }
 

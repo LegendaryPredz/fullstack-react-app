@@ -8,8 +8,6 @@ type TodoUpdate = {
   isCompleted?: boolean
 }
 
-// PUT /api/todo/:id -> update todo 
-// DELETE /api/todo/:id -> delete todo 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!["PUT", "DELETE"].includes(req.method || "")) {
     res.status(405).send('Method Not Allowd');
@@ -24,7 +22,6 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'PUT') {
-    // PUT /api/todo/:id -> update todo 
     const { pid } = req.query
     const { title, isCompleted } = req.body
 
@@ -42,7 +39,6 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'DELETE') {
-    // DELETE /api/todo/:id -> delete todo 
 
 
     return res.json({})

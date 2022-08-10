@@ -7,7 +7,20 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
 import { JWT } from "next-auth/jwt";
 
-const prisma = new PrismaClient()
+// add prisma to the NodeJS global type
+declare module NodeJS {
+  interface Global {
+    prisma: PrismaClient
+  }
+}
+
+// Prevent multiple instances of Prisma Client in development
+declare const global: NodeJS.Global
+
+export const prisma = global.prisma || new PrismaClient()
+
+if (process.env.NODE_ENV === 'development') global.prisma = prisma
+
 
 type SessionArg = {
   session: Session,

@@ -1,17 +1,19 @@
-#H1 Fullstack Todo App
+# Fullstack Todo App
 
-#H2 Tech Stack: 
+## Tech Stack: 
 
-1. Next.js with TypeScript support 
-2. ChakraUi 
-3. Prisma 
-4. PostgreSQL
++ Next.js with TypeScript support (Typescript, Javascript, HTML, CSS)
++ Node.js
++ ChakraUi 
++ Prisma 
++ PostgreSQL
+
 
 With other features such as NextAuth and PrismaORM 
 
-[Website Here](https://fullstack-react-p4ynuhor1-legendarypredz.vercel.app/)
+[Click Here](https://fullstack-react-p4ynuhor1-legendarypredz.vercel.app/)
 
-#H3 How to use:
+### How to use:
 
 1. Click the Get started button.
 2. Log in with Twitter or Github.
